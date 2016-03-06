@@ -1,0 +1,69 @@
+## KDD 1998 cup
+### Soledad Galli
+#### 6th March 2016
+
+
+This folder contains data preproessing, feature engineering and machine learning algorithms to predict the probability of a person making a donation and the potential amount donated.
+
+Dataset is publicly available. In particular, this version was downloaded from the [KDD Cup 1998 Data Website](http://kdd.ics.uci.edu/databases/kddcup98/kddcup98.html).
+
+The jupyter notebooks contain the following:
+
+1) **kdd_data_preprocessing:** Data gathering, cleaning and tidying.
+  * Removed categorical variables with too many different values
+  * Replaced empty strings and periodic numbers with NaN
+  * Removed columns with more than 70% missing values
+  * Imputed missing values with median for numerical variables
+  * Imputed missing values with most frequent value in categorical values
+  * Removed variables with constant value
+  * Removed variables with very little variation
+  * Calculated time passed from date variables to 1997 and dropped date variables
+  * Arranged format of certain variables (see notebook)
+  * Created dummy variables from categorical variables.
+  * Divided dataset in one for continuos prediction (amount donated) including information only of people that made a donation, and dataset for prediction of probability of making a donation, including all the columns except the amount donated.
+
+
+2) **kdd_regression:** Machine learning models to predict the continuous variable "amount donated".
+  * Univariate feature selection
+  * Linear regression models
+  * Bayesian Ridge Model
+  * Support Vector Regression
+
+
+3) **kdd_feature_engineering:** Feature manipulation.
+  * Found and removed highly correlated features (> 0.7)
+  * From non binary features created:
+      * logarithmic transformation (for linearisation)
+      * 4 Binary variables that seggregated the values per quantile
+  * For each one of the non binary features, after engineering further features, selected the best predictor and discarded the rest.
+
+
+4) **kdd_regression_2ndAttempt:** Machine learning models to predict the continuous variable "amount donated". Here I used the best features selected after feature engineering in the previous notebook using loan amount as a measure for feature selection.
+  * Univariate feature selection
+  * Linear regression models
+  * Bayesian Ridge Model
+  * Support Vector Regression
+  * Best model: linear regression with 10 selected features.
+
+5) **kdd_regression_3ndAttempt:** Machine learning models to predict the continuous variable "amount donated". Here I used the best features selected after feature engineering in the previous notebook using log(loan amount) as a measure for feature selection.
+  * Univariate feature selection
+  * Linear regression models
+  * Bayesian Ridge Model
+  * Support Vector Regression
+  * Best model: Bayesian Ridge. Further optimisation could make the model perform even better and remains to be explored.
+
+6) **kdd_classification:** Machine learning models to predict the binary variable donated/ did not donate
+  * Feature selection and recursive feature elimination
+  * Logistic regression models
+  * Random Forest Trees
+  * XGBoost
+  * In all the cases, the auc was never better than 0.5 for the testing set, indicating that the models do not predict the outcome better than predicting the majority.
+  
+7) **kdd_classification:** Machine learning models to predict the binary variable donated/ did not donate after feature engineering.
+  * Included feature "donations", as the prediction of amount donated per person from linear model.
+  * Did feature linearisation and binarisation as in feature engineering notebook.
+  * Feature selection and recursive feature elimination
+  * Logistic regression models
+  * Random Forest Trees
+  * XGBoost
+  * In all the cases, the auc was never better than 0.5 for the testing set, indicating that the models do not predict the outcome better than predicting the majority.
